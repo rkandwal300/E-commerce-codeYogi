@@ -19,13 +19,19 @@ let ProductListPage = () => {
 
    useEffect(()=>{
     const allData = getProduct();
-      setProduct(allData);
+    
+allData.then((response)=>{
+  console.log('data aa agya ',response.data.products);
+  
+  setProduct( response.data.products);
+})
+     
    },[]);
 
    let data2 = product ;
 
  let data = sort;
-//  console.log('data before = ',product);
+ console.log('data before = ',product);
 
 
 
@@ -33,7 +39,7 @@ let ProductListPage = () => {
 
     let tit = elem.title.toLowerCase();
     let txt = ip.toLowerCase();
-    // console.log(txt);
+    console.log(txt);
     return tit.indexOf(txt) != -1;
   });
 
@@ -51,14 +57,14 @@ let ProductListPage = () => {
 
     case "high":
       data = product.sort((x,y)=>{
-        return x.Price - y.Price;
+        return x.price - y.price;
      });
    
     break;
 
     case "low":
       data = product.sort((x,y)=>{
-        return y.Price-x.Price;
+        return y.price-x.price;
      });
 
     break;
@@ -79,7 +85,7 @@ let ProductListPage = () => {
 
 
 
-  return (<>
+  return (data &&( <>
     <div className='h-fit w-full bg-slate-100  ' >
 
    
@@ -132,7 +138,7 @@ let ProductListPage = () => {
 
 
 
-  </>);
+  </>))
 }
 
 export default ProductListPage;
