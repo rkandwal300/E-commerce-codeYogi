@@ -32,7 +32,7 @@ let Header=()=>{
         <header   id='head' className=' h-[80px] w-full flex   justify-between lg:justify-evenly items-center  bg-white shadow-md    transition-all duration-200  ease-in '> 
         
         <div className='w-[300px] ml-[30px] mr-[40px]  '  >  <img src='https://trycasuals.com/wp-content/uploads/2019/06/print-1-1.svg'   /></div> 
-
+     s
         <div className=' lg:w-[850px] w-[250px]    flex  justify-between items-center mr-[30px] ' >
 
         {/*  */}
