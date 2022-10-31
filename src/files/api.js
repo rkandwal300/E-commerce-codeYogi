@@ -42,5 +42,11 @@ return axios.get(`https://dummyjson.com/products/`+id);
 
 //  }
 
+
+
+
+
+
+
  export default getProduct;
  export {getSingleProduct };

@@ -1,6 +1,5 @@
 import React from 'react';
 import Product from './Product';
-import ProductDetail from './ProductDetail';
 
 let ProductList=({props})=>{
 

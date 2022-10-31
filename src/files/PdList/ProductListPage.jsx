@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import ProductList from './ProductList';
-import Error from './Error'
-
-// import allData from './DummyData.js';
-import getProduct from './api.js'
+import Error from '../Error'
+import { useContext } from 'react';
+import Loading from '../Loading';
+// import getProduct from '../api.js'
+import NoteContext from '../../Api/noteContext';
 
 let ProductListPage = () => {
 
 
-
+const content = useContext(NoteContext)
   
 
 
@@ -17,39 +18,52 @@ let ProductListPage = () => {
   const [ sort,setSort] = useState("default");
 
 
-   useEffect(()=>{
-    const allData = getProduct();
-    
-allData.then((response)=>{
-  console.log('data aa agya ',response.data.products);
-  
-  setProduct( response.data.products);
-})
+  useEffect(()=>{
      
-   },[]);
+    setProduct(content.products);
+     console.log('data aa agya ',content.products);
+     
+          
+    // const allData = getProduct();
+    
+// allData.then((response)=>{
+//   console.log('data aa agya ',response.data.products);
+  
+//   setProduct( response.data.products);
+// })
+   },[content]);
+
+
+   if(product){
 
    let data2 = product ;
 
  let data = sort;
- console.log('data before = ',product);
+//  console.log('data before = ',product);
 
 
 
-  data = product.filter((elem, index) => {
+ console.log ('search data == ',data)
 
-    let tit = elem.title.toLowerCase();
-    let txt = ip.toLowerCase();
-    console.log(txt);
-    return tit.indexOf(txt) != -1;
-  });
+ 
+  // data = product.filter((elem, index) => {
+
+  //   let tit = elem.title.toLowerCase();
+  //   let txt = ip.toLowerCase();
+  //   console.log(txt);
+  //   return tit.indexOf(txt) != -1;
+  // });
 
   //  console.log('data before = ',data);
 
 
+
+     
   switch (sort) {
 
     case "default":
       data = product.sort((x,y)=>{
+        console.log *(' sort data =',data);
         return x.id - y.id;
       })
 
@@ -67,25 +81,46 @@ allData.then((response)=>{
         return y.price-x.price;
      });
 
+     console.log *(' sort data =',data);
     break;
 
     case "name":
-     data = product.sort((x,y)=>{
-      return (x.title < y.title ? -1 : 1);
-     });
+      data = product.sort((x,y)=>{
+        return (x.title < y.title ? -1 : 1);
+      });
+      console.log *(' sort data =',data);
 
     break;
     }
 
+   
+
+    
+    // useMemo(
+      // () => {
+       data =   product.filter((elem, index) => {
+   
+             let tit = elem.title.toLowerCase();
+             let txt = ip.toLowerCase();
+            //  console.log('search letters are  = ',txt);
+             // console.log('search title =    ',tit);
+            //  console.log('inside search  = ',tit.indexOf(txt));
+             return tit.indexOf(txt) != -1;
+           });
+          //  return data;
+      // },
+      // [ip]
+    // )
+   
 
   let inputt = (event) => { setIp(event.target.value); }
 
   let select=(event)=>{ setSort(event.target.value); }
   
 
+//  console.log(' just at last data == ',data)
 
-
-  return (data &&( <>
+  return (data ?( <>
     <div className='h-fit w-full bg-slate-100  ' >
 
    
@@ -109,7 +144,7 @@ allData.then((response)=>{
         </div>
       
         {data.length > 0 && <ProductList props={data} />}
-        {data.length == 0 && <Error />}
+        {data.length == 0 && <Loading/>} { /*// no products*/}
 
       </div>
 
@@ -138,7 +173,12 @@ allData.then((response)=>{
 
 
 
-  </>))
+  </>):<Loading /> )
+}
+else{
+  <Loading />
+
+}
 }
 
 export default ProductListPage;

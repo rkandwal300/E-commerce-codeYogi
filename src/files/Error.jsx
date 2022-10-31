@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const Error = () => {
   return (
-    <div>
+    <div >
 
-<h1 className=' text-4xl font-extrabold text-black'>
+<h1 className=' h-[100vh] w-full text-4xl font-extrabold text-black'>
     404 Error page not found
 </h1>
 
@@ -12,4 +12,4 @@ const Error = () => {
   )
 }
 
-export default Error
+export default memo( Error)

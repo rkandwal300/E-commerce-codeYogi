@@ -3,5 +3,4 @@
                     }).catch(()=>{ console.log('error api  api')})
                     
 
-  )
-}
+  
