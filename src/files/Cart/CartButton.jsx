@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react'
 
-const CartButton = ( {  updateData  }  ) => {
+const CartButton = ( {  updateData ,  oldvalue }  ) => {
 
 
 
 
 
 
+    const HandleUpdate = () =>{
+
+    const jsonCart = JSON.stringify(updateData)
+    localStorage.setItem('cart-items' ,jsonCart)
+
+    }
 
 
     console.log( ' update data by aa  use state = ',updateData)
+    console.log( ' old data by use state = ',oldvalue)
     return (
     <div>
         <div className=' h-fit p-2 flex flex-wrap  border-2 border-slate-300  md:flex-nowrap  md:justify-between justify-center  items-center  bg '>
@@ -32,7 +39,7 @@ const CartButton = ( {  updateData  }  ) => {
     
         <button   
         className=' bg-red-400 sm:px-14 w-full  py-2 rounded-lg shadow-md text-sm font-semibold text-white md:mt-6 mt-3 '  
-        onClick={updateData}
+        onClick={HandleUpdate}
         >UPDATE CART </button>  
     }
         </div>

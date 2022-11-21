@@ -71,6 +71,8 @@ const HandleQuantity = ( id , quantity )=>{
   console.log( 'cart page = ',cartObj);
 }
 
+
+
 console.log( 'cart page out side = ',cart);
 
 
