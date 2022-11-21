@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import NoteContext ,{SingleContext} from './noteContext'
 import axios from 'axios'
-import { useParams } from 'react-router-dom';
+// import ProductDetail from '../files/PdDetail/ProductDetail';
 
 const NoteState = (props) => {
 
     const [data , setData] = useState([]);
 
-useEffect(()=>{
+    useEffect(()=>{
 
   
   const p =  axios.get('https://dummyjson.com/products');
   p.then((response)=>{
-   console.log('context api data = ' ,response.data)
-   setData(response.data)
+  //  console.log('context api data = ' ,response.data)
+  setData(response.data)
   }).catch((error)=>{
     console.log(error.message)
   })
     
-     
+
 },[])
 
           
@@ -27,7 +27,6 @@ useEffect(()=>{
 <>
         <NoteContext.Provider value={data}>
             {props.children}
-            {/* <APP //> */}
         </NoteContext.Provider>
         </>
   )
@@ -37,40 +36,54 @@ useEffect(()=>{
 
 
 
-// const SingleProduct = (props) => {
+const SingleProductContext = (props) => {
 
-//   // const [singleData , setSingleData] = useState([]);
-//   const {link} = useParams().id;
 
-//    console.log('link = ',link)
+  const [productId, setProductId] = useState(0);
+  const [productresponse, setProductResponse] = useState([]);
 
-// useEffect(()=>{
-//   
+  let link= 'https://dummyjson.com/products/'+ productId; 
+  console.log('link = ', typeof(link))
 
-// const p1 =  axios.get(`https://dummyjson.com/products/`+id);
+  useEffect(() => {
+    
 
-// p1.then((response)=>{
-//  console.log('context singlle Product data data = ' ,response.data)
-//  setSingleData(response.data)
-// }).catch((error)=>{
-//   console.log(error.message)
-// })
-  
-   
-// },[])
 
-        
-  
-// return (
-// <>
-//       <SingleContext.Provider value={link}>
-//           {props.children}
-//       </SingleContext.Provider>
-//       </>
-// )
-// }
+    // const p = axios.get('https://dummyjson.com/products/5');
+     const p =  axios.get('https://dummyjson.com/products/'+ productId);
+    p.then((response) => {
+
+      // console.log('context single Product data data = ', response.data)
+
+      setProductResponse(response.data);
+    }).catch(() => {
+      console.log('404 error sale');
+    })
+
+
+  }, [])
+
+  console.log (' pro id  id = ',productId)
+
+  let data2 = {
+    productresponse,
+    setProductId
+  }
+
+
+  // console.log(' data 2 type = ', typeof (data2))
+
+return (
+<>
+      <SingleContext.Provider value={data2 }>
+          {props.children}
+      </SingleContext.Provider>
+      </>
+)
+}
 
 
 
 export default NoteState;
-// export {SingleProduct}
+export { SingleProductContext }
+

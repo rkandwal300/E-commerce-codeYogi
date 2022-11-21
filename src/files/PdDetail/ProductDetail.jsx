@@ -6,51 +6,64 @@ import { getSingleProduct } from '../api.js'
 import Loading from '../Loading.jsx';
 import Error from '../Error.jsx'
 import PdDetailImg from './PdDetailImg.jsx';
-import { SingleContext } from '../../Api/noteContext.js';
 import Stars from './Stars.jsx';
+import { SingleProductContext } from '../../Api/noteState.jsx';
+import { SingleContext } from '../../Api/noteContext.js';
+import SingleData ,{Context} from '../../Api/SingleData.jsx';
 // import allData from './DummyData';
 
 let ProductDetail = ( { onAddToCart }) => {
 
 
-
-  const product  = useContext(SingleContext)
-
-  console.log('product api = ', product)
-// const data= allData;
-const id = +(useParams().id);
-
-let url = id;
-console.log('id = ',id)
-
-
-
-
-const [ data , setData] = useState([]);
-const [error , setError] = useState(false);
-
-const [ count ,setCount ] = useState(1);
-
-
-useEffect(() => {
-
-  const p = getSingleProduct(id);
   
- p.then((response)=>{
-    // console.log('proo p =',response.data);
-    setError(false)
+  // const ProProduct  = useContext(SingleContext);
+
+
+  let  id = +(useParams().id);
+  
+  //  id = id.slice( id.length-1);
+  // console.log('id = ',typeof(id))
+  
+  
+  
+  const [ data , setData] = useState([]);
+  const [error , setError] = useState(false);
+  
+  const [ countInput , setCountInput ] = useState(1);
+  const [ count ,setCount ] = useState(countInput);
+  
+  
+  
+  
+  // console.log(' count input ==  ',countInput )
+  
+  useEffect(() => {
+    
+   
+    // ProProduct.setProductId(id);
+    // setData(ProProduct.productresponse);
+    
+    
+    
+    
+    
+    
+      const p = getSingleProduct(id);
+    
+     p.then((response)=>{
+          // console.log('proo p =',response.data);
+          setError(false)
     setData(response.data);
   }).catch(()=>{
     console.log('404 error sale');
     setError(true);
   })
-  
 
 
-  } ,[id])
- 
 
-// }, [id])
+
+} ,[id])
+
 
 
 
@@ -58,8 +71,16 @@ let index =data.id;
 let length = data.length;
 
 let countCart=(event)=>{
-  // console.log('cart clicked',event.target.value);
+
   setCount(+event.target.value);
+
+  console.log (' count Cart ');
+
+}
+const Next =()=>{
+  console.log ( 'previous nd next')
+
+  setCountInput(1);
 
 }
 
@@ -108,7 +129,9 @@ const addCart=()=>{
 
 <div  className="  w-[90%] min-w-[45%] h-fit p-[20px] mt-[30px] ml-[5%] "  > 
  {/* <img src={data.thumbnail} />  */}
+ 
 
+ {/* <SingleData /> */}
 
  <PdDetailImg  props={data.images} />
 
@@ -148,7 +171,7 @@ const addCart=()=>{
                 <div className="flex flex-nowrap mt-[50px] ">
                 <div className=' flex justify-center items-center mr-[20px] text-2xl font-medium '> Quantity :</div>
 
-                <input id='cartItems' type='number' className=" w-[80px]  py- text-2xl text-center mr-[50px]  border-[3px] border-slate-500 rounded-lg  " placeholder='1' onChange={ countCart} value={count} />
+                <input id='cartItems' type='number' className=" w-[80px]  py- text-2xl text-center mr-[50px]  border-[3px] border-slate-500 rounded-lg  " placeholder='1' value={count}  onChange={countCart}  />
 
              
                 <button  onClick={addCart} className="py-[10px] w-[250px]  h-[60px] mr-[30px] px-[40px] text-slate-50 rounded-xl bg-red-500 text-xl "> ADD TO THE CART</button>
@@ -171,7 +194,7 @@ const addCart=()=>{
    
     { index >1  &&   (
     
-      <Link to={'/products/' + (id-1)} className='flex justify-start items-center text-2xl cursor-pointer  hover:text-red-300'   > 
+      <Link to={'/products/' + (id-1)} className='flex justify-start items-center text-2xl cursor-pointer  hover:text-red-300'  onClick={Next}    > 
 
     <span className='text-5xl' >   <BiArrowBack /> </span>
     <span> Previous Product </span> 
@@ -183,7 +206,7 @@ const addCart=()=>{
 
 
 
-              <Link to={'/products/' + (id+1)} className='flex justify-start items-center text-2xl cursor-pointer  hover:text-red-300'   > 
+              <Link to={'/products/' + (id+1)} className='flex justify-start items-center text-2xl cursor-pointer  hover:text-red-300'  onClick={Next}    > 
               <span> Next Product </span>
               
              <span className='text-5xl' >  <BiRightArrowAlt /> </span> 
@@ -207,4 +230,4 @@ const addCart=()=>{
   ))
 }
 
-export default memo( ProductDetail);
+export default  ProductDetail;

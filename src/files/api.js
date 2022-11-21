@@ -4,7 +4,8 @@ import axios from 'axios';
 // .get("https://myeasykart.codeyogi.io/products/")
 let getProduct=()=>{
 
-const allData = axios.get('https://dummyjson.com/products');
+const allData = axios.get('https://fakestoreapi.com/products');
+// const allData = axios.get('https://dummyjson.com/products');
 
   return allData;
 }

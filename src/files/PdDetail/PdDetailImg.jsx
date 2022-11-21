@@ -30,7 +30,7 @@ if(!props){
      pic.map((elem,index)=>{
       
            return (
-            <div className=' h-fit w-[120px] hover:border-[5px] border-slate-400   p-0  m-2  '>
+            <div className=' h-fit w-[150px] hover:border-[5px] border-slate-400   p-0  m-2  '>
 
                <img  id={'ab'+index} className='cursor-pointer m-0 hover:shadow-xl shadow-black ' src = {elem} alt={elem}   onMouseEnter={photo} width='98%'  />
 
