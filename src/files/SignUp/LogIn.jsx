@@ -20,13 +20,13 @@ password : yup.string().min(8,"enter atleast 8 characters on password") .require
 
 const  initialValues={
 
-           email:'',
-           password:'',
+        email:'',
+        password:'',
         };
 
 
 
-  
+
 
 export function LogIn(  handleSubmit , 
                         values ,
@@ -44,7 +44,7 @@ export function LogIn(  handleSubmit ,
                             handleChange)
 
 
-  return (
+    return (
 
 
 
@@ -83,10 +83,10 @@ export function LogIn(  handleSubmit ,
                         placeholder = 'enter email ' 
                         autoComplete = " email"
                         value= {values.email}
-                        // onChange={handleChange}
-                        // touched={touched.email}
-                        // error={errors.email}
-                        // onBlur = {handleBlur }
+                        onChange={handleChange}
+                        touched={touched.email}
+                        error={errors.email}
+                        onBlur = {handleBlur }
 
                         />
 

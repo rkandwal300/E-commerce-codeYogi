@@ -4,7 +4,7 @@ import React  from 'react'
 import * as yup from 'yup'
 import Input1 from '../../individual_tags/Input';
 
-let LogIn = () => {
+let LogIn3 = () => {
 
     const handleLogin =()=>{
          event.preventDefault();
@@ -56,7 +56,7 @@ const schema = yup.object().shape({
 
                     <Input
                         label ="email Address "
-                        id='emailId' 
+                        id='email' 
                         name = 'email'  
                         type='email' 
                         required 
@@ -96,4 +96,4 @@ const schema = yup.object().shape({
   )
 }
 
-export default LogIn
+export default LogIn3

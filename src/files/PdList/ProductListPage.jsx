@@ -6,7 +6,9 @@ import Loading from '../Loading';
 // import getProduct from '../api.js'
 import NoteContext from '../../Api/noteContext';
 
-let ProductListPage = () => {
+
+let ProductListPage = ( ) => {
+
 
 
 const content = useContext(NoteContext)
@@ -19,46 +21,19 @@ const content = useContext(NoteContext)
 
 
   useEffect(()=>{
-     
     setProduct(content.products);
-     console.log('data aa agya ',content.products);
-     
-          
-    // const allData = getProduct();
-    
-// allData.then((response)=>{
-//   console.log('data aa agya ',response.data.products);
-  
-//   setProduct( response.data.products);
-// })
-   },[content]);
+  },[content]);
 
 
-   if(product){
+  if(product){
 
-   let data2 = product ;
+  let data2 = product ;
 
- let data = sort;
-//  console.log('data before = ',product);
+  let data = sort;
 
 
 
- console.log ('search data == ',data)
 
- 
-  // data = product.filter((elem, index) => {
-
-  //   let tit = elem.title.toLowerCase();
-  //   let txt = ip.toLowerCase();
-  //   console.log(txt);
-  //   return tit.indexOf(txt) != -1;
-  // });
-
-  //  console.log('data before = ',data);
-
-
-
-     
   switch (sort) {
 
     case "default":
@@ -72,14 +47,14 @@ const content = useContext(NoteContext)
     case "high":
       data = product.sort((x,y)=>{
         return x.price - y.price;
-     });
-   
+      } );
+
     break;
 
     case "low":
       data = product.sort((x,y)=>{
         return y.price-x.price;
-     });
+      });
 
      console.log *(' sort data =',data);
     break;
@@ -93,32 +68,21 @@ const content = useContext(NoteContext)
     break;
     }
 
-   
 
-    
-    // useMemo(
-      // () => {
-       data =   product.filter((elem, index) => {
-   
-             let tit = elem.title.toLowerCase();
-             let txt = ip.toLowerCase();
-            //  console.log('search letters are  = ',txt);
-             // console.log('search title =    ',tit);
-            //  console.log('inside search  = ',tit.indexOf(txt));
-             return tit.indexOf(txt) != -1;
-           });
-          //  return data;
-      // },
-      // [ip]
-    // )
-   
+
+
+      data =   product.filter((elem, index) => {
+        let tit = elem.title.toLowerCase();
+        let txt = ip.toLowerCase();
+        return tit.indexOf(txt) != -1;
+        });
+
 
   let inputt = (event) => { setIp(event.target.value); }
 
   let select=(event)=>{ setSort(event.target.value); }
-  
 
-//  console.log(' just at last data == ',data)
+
 
   return (data ?( <>
     <div className='h-fit w-full bg-slate-100  ' >
@@ -128,17 +92,21 @@ const content = useContext(NoteContext)
 
       <div className='  w-[94%] ml-[3%] rounded-xl shadow-md shadow-black mt-[50px] bg-white  flex justify-center flex-wrap  '>
 
-        <div className='h-[100px] mt-[20px]  w-full flex  flex-col justify-center md:items-end lg:mr-[170px] md:mr-[150px] sm:items-center mr-[50px] ml-[50px] '>
+      <div className='  w-full   flex  justify-end ' >  
+        <div className='h-[100px] mt-[20px]  w-[300px]  flex  flex-col justify-center items-start mr-[30px] sm:mr-[120px] md:mr-[30px]  '>
 
 
-          <input className='h-[40px] w-[300px] rounded-xl text-center tracking-wide text-xl shadow-lg shadow-slate-300   active:bg-slate-300   border-2 border-black     ' type='text' placeholder='Search Here.....' autoComplete='off' onChange={inputt} />
+          <input className='h-[30px] w-[240px] rounded-lg text-center tracking-wide text-md shadow-lg shadow-slate-300   active:bg-slate-300    border-2 border-slate-500 focus:border-indigo-500    ' type='text' placeholder='Search Here.....' autoComplete='off' onChange={inputt} />
 
-          <select  className='h-[40px] w-[300px]  rounded-xl border-2 border-slate-500  px-[10px] text-lg  mt-4 '  onChange={select} >
+          <select  className='h-[30px] w-[240px]  rounded-lg border-2 border-slate-500  px-[10px] text-md  mt-4 '  onChange={select} >
             <option  defaultValue ='default' > Default Sorting     </option>
             <option  value='low'    > High To Low  </option>
             <option  value='high'   > Low To High  </option>
             <option  value='name'   > Sort By Name  </option>
           </select>
+
+
+        </div>
 
 
         </div>
