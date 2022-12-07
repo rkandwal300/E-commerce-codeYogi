@@ -1,28 +1,25 @@
 import React, { useState,useEffect, useContext, memo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { BiArrowBack , BiRightArrowAlt } from "react-icons/bi";
-import { AiFillCodeSandboxCircle, AiFillStar,AiOutlineStar } from "react-icons/ai";
-import { getSingleProduct } from '../api.js'
+import {  AiFillStar} from "react-icons/ai";
 import Loading from '../Loading.jsx';
 import Error from '../Error.jsx'
 import PdDetailImg from './PdDetailImg.jsx';
 import Stars from './Stars.jsx';
-import { SingleProductContext } from '../../Api/noteState.jsx';
-import { SingleContext } from '../../Api/noteContext.js';
-import SingleData ,{Context} from '../../Api/SingleData.jsx';
-// import allData from './DummyData';
-
-let ProductDetail = ( { onAddToCart }) => {
+import { cartListContext } from '../../Api/CartContext.jsx';
+import { AlertContext } from '../../Api/AlertContext.jsx';
+import Alert from '../SignUp/alert.jsx';
+import { getSingleProduct } from '../../Api/Sort-Search.jsx';
 
 
-  
-  // const ProProduct  = useContext(SingleContext);
+let ProductDetail = ( ) => {
+  const {onAddToCart} = useContext(cartListContext);
+  const {alert, setalert} = useContext(AlertContext);
 
 
   let  id = +(useParams().id);
   
-  //  id = id.slice( id.length-1);
-  // console.log('id = ',typeof(id))
+
   
   
   
@@ -43,9 +40,13 @@ let ProductDetail = ( { onAddToCart }) => {
     p.then((response)=>{
           // console.log('proo p =',response.data);
           setError(false)
-    setData(response.data);
+    setData(response);
   }).catch(()=>{
-    console.log('404 error sale');
+    tempAlert.type = 'error';
+    tempAlert.message = ' 404 error  product cannot load ';
+    tempAlert.hidden = false
+    console.log(' alert',tempAlert)
+    setalert( tempAlert)
     setError(true);
   })
 
@@ -54,9 +55,6 @@ let ProductDetail = ( { onAddToCart }) => {
 
 } ,[id])
 
-
-
-
 let index =data.id;
 let length = data.length;
 
@@ -64,20 +62,20 @@ let countCart=(event)=>{
 
   setCount(+event.target.value);
 
-  console.log (' count Cart ');
-
 }
-const Next =()=>{
-  console.log ( 'previous nd next')
-
-  setCountInput(1);
-
-}
+const Next =()=>{  setCountInput(1) }
 
 
 const addCart=()=>{
-  console.log('function = ',onAddToCart());
   onAddToCart(id,count);
+
+  const  tempAlert = alert ;
+  
+  tempAlert.type = 'add-cart';
+  tempAlert.message = data.title;
+  tempAlert.hidden = false
+  console.log(' alert',tempAlert)
+  setalert( tempAlert)
 }
 
 
@@ -113,27 +111,34 @@ const addCart=()=>{
 
 
 
-    <div className=" ml-[3%] mr-[3%] mt-0  rounded-xl flex 2xl:flex-nowrap shadow-lg shadow-black flex-wrap   h-fit  mb-[100px] justify-center ">
+    <div className=" ml-[3%] mr-[3%] mt-0  rounded-xl flex  flex-col 2xl:flex-nowrap shadow-lg shadow-black flex-wrap  h-fit mb-[100px] justify-center ">
+
+      
+
+      <div className='w-full h-fit'>
+      <Alert />
+      </div>
+      <div className='flex  flex-wrap  justify-center 2xl:flex-nowrap   '>
+
+<div  className="  w-[90%] min-w-[45%]  h-fit p-[20px] mt-[30px] ml-[5%] "  > 
 
 
-<div  className="  w-[90%] min-w-[45%] h-fit p-[20px] mt-[30px] ml-[5%] "  > 
- {/* <img src={data.thumbnail} />  */}
+<div className=' md:h-[300px]  mt-[30px]  md:w-[600px] flex justify-center items-center    '>
 
+<img className='ml-[40px]  h-full ' src={data.thumbnail} alt='product' height='100%' />
+</div>
 
- {/* <SingleData /> */}
-
-  <PdDetailImg  props={data.images} />
 
 </div>
 
  {/* add to cart and buy  */}
 
 
-                <div className="   w-[90%] min-w-[45%] h-[500px] ml-[5%] flex flex-col justify-center items-center  mt-[30px] pr-[20px] ">  
+                <div className="   w-[80%] min-w-[45%] h-fit ml-[0%]  py-[3%]flex flex-col justify-center items-center  xl-mt-[1100px] pr-[20px] ">  
 
                     <div> 
 
-                        <h1  className="font-medium  font-serif mb-[20px] mt-[20px] text-3xl  tracking-wider  "> {data.title} </h1>
+                        <h1  className="font-medium  font-serif mb-[20px] mt-[30px] text-3xl  tracking-wider  "> {data.title} </h1>
 
                         <p  className="mt-[10px] text-lg font-normal font-serif">  {data.description}</p>
 
@@ -155,13 +160,13 @@ const addCart=()=>{
 
                     </div>
                 
-                <div className="flex flex-nowrap mt-[50px] ">
+                <div className="flex mt-[50px] flex-wrap ">
                 <div className=' flex justify-center items-center mr-[20px] text-xl font-medium '> Quantity :</div>
 
                 <input id='cartItems' type='number' className=" w-[50px] h-[50px]  text-xl text-center mr-[50px] mt-1 border-[3px] border-slate-500 rounded-lg  " placeholder='1' value={count}  onChange={countCart}  />
 
 
-                <button  onClick={addCart} className="py-[10px] w-[250px]  h-[60px] mr-[30px] px-[40px] text-slate-50 rounded-xl bg-red-500 text-xl "> ADD TO THE CART</button>
+                <button  onClick={addCart} className="py-[10px] w-[250px]  h-[60px] mr-[30px] px-[40px] text-slate-50 rounded-xl bg-red-500 text-xl mt-8 lg-mt-0 "> ADD TO THE CART</button>
 
 
                 </div>
@@ -169,13 +174,13 @@ const addCart=()=>{
 
                 
 
-                <div className='h-[300px]  w-full   mt-[50px] '  > 
+                <div className='h-[300px]  w-full  lg-mb-0 mb-36   lg-mr-10 mt-[50px] '  > 
                 
 
 
     <div className='flex items-center  flex-nowrap  justify-between   '>
 
-<div>
+<div className=''>
   
     { index >1  &&   (
     
@@ -202,6 +207,7 @@ const addCart=()=>{
             </div>
                 
                 </div>
+        </div>
         </div>
 
   </div>

@@ -1,50 +1,106 @@
-import React, { useState } from "react";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import { MdOutlineDangerous } from "react-icons/md";
+import React, { useContext, useEffect, useState } from "react";
+import { AiOutlineCheckCircle, AiFillCheckCircle , AiFillInfoCircle } from "react-icons/ai";
+import { MdOutlineDangerous  } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { AlertContext } from "../../Api/AlertContext";
 
-const Alert = ({ message , type   }) => {
+const Alert = () => {
 
-    let color;
-    let icon ;
-    type = 'success'
+  
 
-    if(type == 'success' ){
-    color = 'bg-green-300 ';
-    icon = <AiOutlineCheckCircle />
+  const {alert , setalert}  = useContext(AlertContext)
+
+
+ 
+
+  const  [hide , setHide ] = useState ( );
+
+
+
+  const Timeout =()=>{
+    setHide(true)
+  }
+
+
+  const handleHide = ()=>{
+    setHide(true)
+  }
+
+
+  useEffect(()=>{
+    const AlertHidden = alert.hidden;
+    setHide(AlertHidden)
+    if(AlertHidden  == false){
+  const myTimeout = setTimeout(Timeout, 3 * 1000);
+return ()=>{
+
+  clearTimeout(myTimeout);
+}}
+
+
+},[alert.hidden ])
+
+
+
+    let  text ;
+    let icon  ,content;
+
+    switch(alert.type){
+      case "success" :
+      content= 'A simple alert with text and a right icon   '
+      console.log('sucesshehe  ');
+      text = 'text-teal-600';
+      icon = <AiFillCheckCircle />
+      break ;
+      
+      case 'add-cart':
+        console.log('cart added');
+        // message = 'A simple alert with text and a right icon   '
+        text = 'text-teal-600';
+        content = ( alert.message +' has been added to your cart. ')
+        icon = <AiFillCheckCircle/>
+        break ;
+        
+        case 'error':
+          console.log('error occurred');
+          content= alert.message
+        text = 'text-red-500';
+        icon = <AiOutlineCheckCircle />
+        break ;
+
+
     }
-    else{
-        color = 'bg-red-400 ';
-        icon = <MdOutlineDangerous />
-    }
+
+if(hide == false){
 
     return (
- <>
- <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
-  <div class="flex">
-    <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
-    <div>
-      <p class="font-bold">Our privacy policy has changed</p>
-      <p class="text-sm">Make sure you know how these changes affect you.</p>
-    </div>
-  </div>
+<>
+<div className={"relative py-5 pl-4 pr-10 leading-normal flex justify-between items-center bg-gray-200  border-t-4 border-red-600    " } role="alert">
+<div className="flex justify-center items-center  " >
+
+<div className= {`mr-2 text-xl font-bold text-teal-500 ${text} `  }>
+{icon}
 </div>
 
-
-
-    <div class={" border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"  + ' ' + color } role="alert">
-  <div class="flex">
-    <div class="py-1 pr-4 pl-1 text-3xl text-green-500    ">
-    {icon}
-    </div>
-    <div>
-      <p class="font-bold">Our privacy policy has changed</p>
-      <p class="text-sm">Make sure you know how these changes affect you.</p>
-    </div>
+  <p className="text-lg">  {content}  </p>
   </div>
+  <span className="absolute inset-y-0 right-0 flex items-center mr-5">
+
+<div    onClick={ handleHide }>
+  {alert.type == 'add-cart' ? ( <Link to="/products/Cart" >  <div className=" bg-red-500 text-lg font-semibold text-white py-2   px-4 rounded-lg shadow-lg    "  > View Cart  </div></Link>
+  ):(
+    <div className=""  > x</div>
+  )}
+
 </div>
- </>
+
+  </span>
+</div>
+</>
     );
 
 }
+}
+
 
 export default Alert

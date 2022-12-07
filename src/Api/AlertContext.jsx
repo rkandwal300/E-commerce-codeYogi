@@ -4,14 +4,23 @@ import React, { createContext, useState } from 'react'
 export const AlertContext = createContext();
 
 
-const AlertState = () => {
+const AlertState = (props) => {
 
-    const [alert, setalert] = useState();
+    const data = {
+        type: '',
+        message :'' ,
+        hidden  :  true,
+    }
+
+    const [alert, setalert] = useState(data);
+
+
+
 
 
 return (
-    <AlertContext.Provider value = {{ alert , setalert}} >
-        {children}
+    <AlertContext.Provider value = {{  alert, setalert  }} >
+        {props.children}
     </AlertContext.Provider>
     )
 }

@@ -1,6 +1,6 @@
 import Input  from './Input'
 import React, { useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -69,7 +69,7 @@ const handleSignUp =(values)=>{
             
 });
 
-
+if(!user){
 
     return (
     <div >
@@ -172,4 +172,10 @@ const handleSignUp =(values)=>{
     )
 }
 
+else{
+    
+    return <Navigate to = '/' /> ;
+
+}
+}
 export default SignUp

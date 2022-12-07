@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ImCancelCircle } from "react-icons/im";
-import CartButton from './CartButton';
 
-const CartItem   = ({title , price , photo ,pro ,setDel , setQuantiy  }) => {
+const CartItem   = ({title , price , photo ,pro ,setDel , setQuantiy , quantity  }) => {
 
 
-  const [ value , setValue ] = useState (1); 
+
+  const [ value , setValue ] = useState (quantity);
+  
+  const amount = (value * price);
+
 
   const handleDelete=( event)=>{
     let b = event.currentTarget.id  ;
@@ -18,12 +21,11 @@ const CartItem   = ({title , price , photo ,pro ,setDel , setQuantiy  }) => {
   const handleChange =(event)=>{
 
     setValue(event.target.value);
-    let q = event.target.value;
+    let val = event.target.value;
     let b = event.target.id  ;
     b=b.substring(1, 3);
-    let n  =+b;
-    console.log(n);
-    setQuantiy ( n , q);
+    let id  =+b;
+    setQuantiy ( id , val);
   }
 
 
@@ -53,7 +55,7 @@ className='w-[49%] h-full flex justify-center items-center    '>
               <img className='object-cover  h-[70px] w-[80px]  border-red-400   ' src={ photo } alt={title}   />
             </div>
 
-    <div  className='  h-full   w-[60%]    flex justify-center items-center  text-red-500 font-semibold  ' > { title}</div>
+    <div  className='  h-full   w-[60%]    flex justify-start items-center  text-red-500 font-semibold ml-4   ' > { title}</div>
 
  </div>  {/* 48% */}
 
@@ -74,7 +76,7 @@ className='w-[49%] h-full flex justify-center items-center    '>
       </div>
 
     <div  className='  h-full   w-[35%]    flex justify-center items-center  font-semibold  text-slate-500   '
-    > Subtotal </div>
+    > {value * price } </div>
 </div>
 
 

@@ -6,7 +6,7 @@ const Authentication = () => {
     return (
     <div>
 
-    {  <LogIn2 />  ||  <SignUp />
+    {  <LogIn2 />  ||<SignUp />
     }
 
     </div>

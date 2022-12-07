@@ -6,10 +6,15 @@ import { Link, Navigate } from 'react-router-dom';
 import * as yup from 'yup'
 import Input1 from '../../individual_tags/Input';
 import { UserContext } from '../../Api/UserContext';
+import Alert from './alert';
+import { AlertContext } from '../../Api/AlertContext';
 
 const LogIn2 = () => {
 
+    
+    
     const   {user , setUser} = useContext(UserContext);
+    const { alert ,setalert} = useContext(AlertContext);
 
     const handleLogin =(values)=>{
         event.preventDefault();
@@ -22,7 +27,17 @@ const LogIn2 = () => {
         setUser( user)
         localStorage.setItem('logIn_Token',token);
         })
-        .catch((e) => {  console.log("Invalid Credentials ",e.message ); });
+        .catch((e) => {  console.log("Invalid Credentials ",e.message );
+        const error = alert ;
+
+        error.message = 'Invalid Credentials  Request failed with status code 404 error';
+        error.type = 'error' ;
+
+        error.hidden = false;
+
+        setalert(error);
+
+    });
     }
 
 const schema = yup.object().shape({
@@ -64,7 +79,7 @@ return (
 <form  className='flex flex-col  w-[500px] h-[500px]  bg-white  rounded-lg pt-5  shadow-xl shadow-slate-500  justify-start items-center '
     onSubmit={handleSubmit}
 >
-
+<Alert />
 <h1  className=' my-[20px] text-3xl font-serif font-bold tracking-wider text-slate-600   ' >Log In   </h1>
 
 <label htmlFor='email'  className=' sr-only' >

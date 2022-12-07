@@ -24,7 +24,10 @@ const UserState = (props) => {
     .then((response)=>{
         setUser(response.data);
         setLoadingUser(false);
-    })
+    }).catch((e=>{
+        localStorage.removeItem('logIn_Token');
+        setLoadingUser(false);
+    }))
     }
     else{
     setLoadingUser(false);
@@ -48,7 +51,7 @@ const UserState = (props) => {
 
 return (
     <>
-    <UserContext.Provider value = { { user , setUser , LogOut} }  >
+    <UserContext.Provider value = { { isLoggedIn : !!token , user , setUser , LogOut} }  >
     {props.children}
         </UserContext.Provider>
     </>

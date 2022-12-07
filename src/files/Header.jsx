@@ -3,11 +3,15 @@ import { BsBag , BsCartCheck } from "react-icons/bs";
 import { HiMenu } from "react-icons/hi";
 
 import { Routes, Route, Link, useParams } from "react-router-dom";
+import { cartListContext } from '../Api/CartContext';
 import { UserContext } from '../Api/UserContext';
 
-let Header=({ arr})=>{
+let Header=()=>{
 
-        const {user , LogOut} = useContext(UserContext);
+        const {user , LogOut ,  isLoggedIn} = useContext(UserContext);
+        const {CartCount , setUserData } = useContext(cartListContext)
+
+        setUserData(user);
 
 
 
@@ -19,7 +23,6 @@ let Header=({ arr})=>{
     let menu=()=>{
         let bar = document.getElementById('menu1');
     let navv = document.getElementById('navv');
-        console.log('checked');
         if(m==0){
             navv.style.top='50px';
             head.style.marginBottom='300px';
@@ -34,11 +37,12 @@ let Header=({ arr})=>{
         }
     }
 
+
     return(
         <>
-        <header   id='head' className=' h-[80px] w-full flex   justify-between lg:justify-evenly items-center  bg-white shadow-md    transition-all duration-200  ease-in '> 
+        <header   id='head' className=' h-[50px] w-full flex   justify-between lg:justify-evenly items-center  bg-white shadow-md    transition-all duration-200  ease-in '> 
         
-        <div className='w-[300px] ml-[50px] mr-[40px]   '  >  <img src='https://trycasuals.com/wp-content/uploads/2019/06/print-1-1.svg'   /></div> 
+        <Link to='/' className='w-[100px] ml-[50px] mr-[40px]   '  >  <img src='https://trycasuals.com/wp-content/uploads/2019/06/print-1-1.svg' width='100%'  /></Link> 
 
         <div className=' lg:w-[850px] w-[250px]    flex  justify-between items-center mr-[30px] ' >
 
@@ -78,18 +82,26 @@ let Header=({ arr})=>{
 
 
         <Link  to="/products/Cart">
-            <div className='  cursor-pointer  relative  flex    f hover:text-red-400 ml-[100px] '> 
+            <div className='  cursor-pointer  relative left-16 flex  justify-center items-center   hover:text-red-400 ml-[100px] mb-5  '>
+                
+                    <div className='flex flex-col justify-center  items-center      '>
+                            <div className=' rotate-180 relative top-3 text-lg text-red-500 font-semibold  rounded-full relz '> U</div>
 
-                <span className=' text-xl font-bold text-red-400 absolute left-[-40px] top-[-10px] z-10  '> {arr}</span>
+                            <div className=  'text-red-500 font-semibold  hover:text-black hover:bg-red-500   px-1 py-0 border-[3px] rounded-sm cart border-red-500  text-sm        '     > {CartCount} </div>
+                    </div>
 
-            <span className=' w-[50px]  mb-[30px] absolute  left-[-50px] top-[-10px] z-0 ' >  <img src='https://th.bing.com/th/id/OIP.zaPzoEIaqYob_daizFnrjQHaHa?w=216&h=216&c=7&r=0&o=5&pid=1.7' alt='cart' width='100%'  /> </span>  
-            <span className='text-xl font-bold    ' > Cart </span>
-            </div>
+                    {/* <span className='text-lg text-slate-600 font-semibold mt-5 ml-2   ' > Cart </span> */}
+
+
+            </div> 
+
+
+            
             </Link>
 
 
     <div className=' w-[100px]'  > </div>
-        <div id='menu1' className=' text-2xl text-white  font-extrabold    hover:cursor-pointer  bg-red-500  p-[8px]   lg:hidden ' onClick={menu}   > <HiMenu /> </div>
+        <div id='menu1' className=' text-xl text-white  font-extrabold    hover:cursor-pointer rounded-sm shadow-lg bg-red-500  p-[8px]   lg:hidden ' onClick={menu}   > <HiMenu /> </div>
 
         </div>
         

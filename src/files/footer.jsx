@@ -6,68 +6,82 @@ let Footer = () => {
   return (
     <>
 
-      <div className='w-full pt-[100px]  bg-slate-600'>
+      <div className='w-full pt-[20px] flex justify-center items-center flex-col  bg-slate-600'>
 
 
 
-        <div className='selection:bg-pink-400  pb-[100px]  flex lg:flex-nowrap  md:flex-wrap justify-evenly items-center md:flex-row  flex-col  '>
+        <div className='  pb-[100px]  flex lg:flex-nowrap  md:flex-wrap justify-evenly items-center md:flex-row  flex-col  '>
+
+        <div className=' flex sm:flex-nowrap flex-wrap justify-center  items-center'>  
 
 
-          <div className='ml-[15px] flex flex-col  items-center mx-[15px] font-semibold   mb-[50px]      '>
+                <div className='ml-[15px] flex flex-col  items-center mx-[15px] font-semibold   mb-[50px]      '>
 
-            <img src='https://trycasuals.com/wp-content/uploads/2019/06/print-favicon-free-img-1.png' />
+        <img src='https://trycasuals.com/wp-content/uploads/2019/06/print-favicon-free-img-1.png' />
 
-            <h5 className='text-2xl  mt-[20px] font-sans  font-medium text-white    ' >Custom Print Store </h5>
+        <h5 className='text-2xl  mt-[20px] font-sans  font-medium text-white    ' >Custom Print Store </h5>
 
-            <div className=' flex  justify-evenly text-lg w-[200px] mt-[18px] text-white    ' >
+        <div className=' flex  justify-evenly text-lg w-[200px] mt-[18px] text-white    ' >
 
-              <span className='hover:text-red-500'  >  <FaInstagram />   </span>
-              <span className='hover:text-red-500'  >   <FaTwitter />  </span>
-              <span className='hover:text-red-500'  >  <FaLinkedinIn />   </span>
-              <span className='hover:text-red-500'  >  <FaFacebook />  </span>
+          <span className='hover:text-red-500'  >  <FaInstagram />   </span>
+          <span className='hover:text-red-500'  >   <FaTwitter />  </span>
+          <span className='hover:text-red-500'  >  <FaLinkedinIn />   </span>
+          <span className='hover:text-red-500'  >  <FaFacebook />  </span>
 
-            </div>
+        </div>
+
+                </div>
+
+                  <div className=' text-lg mx-[15px]   w-[350px]   mb-[50px]  mt-[20px] font-sans   text-white '>
+
+
+                  <h6 className=' mb-[15px]   font-semibold   '  > Get in Touch with Us for the Best Quality Custom Prints & Supplies. </h6>
+                  <p className='text-[14px] font-thin ' > Qui dolore ipsum quia dolor sit amet, consec tetur adipisci velit, sed quia non numquam eius modi tempora incidunt lores ta porro ame. </p>
+
+
+                  </div>
+        
+        
+        </div>
+
+        <div  className=' flex sm:flex-nowrap flex-wrap   items-center'>
+
+                  <div className=' text-2xl font-semibold  mt-[20px] font-sans   mb-[50px]  mr-5 text-white '>
+
+
+          <h6 className=' mb-[15px]'  > Quick Links</h6>
+          <p className='text-sm  list-none ' >
+
+            <li className=' hover:cursor-pointer   hover:text-red-500   text-[14px] font-thin   '  > Know More About Us  </li>
+            <li className=' hover:cursor-pointer   hover:text-red-500   text-[14px] font-thin   '   > Visit US  </li>
+            <li className=' hover:cursor-pointer   hover:text-red-500   text-[14px] font-thin   '   >  Lets Connect </li>
+
+          </p>
+
 
           </div>
 
-          <div className=' text-xl mx-[15px]   w-[350px]   mb-[50px]  mt-[20px] font-sans  font-medium text-white '>
 
+          <div className=' text-2xl  mt-[20px] font-sans ml-4  [50px]   font-medium text-white '>
 
-            <h6 className=' mb-[15px]   font-semibold   '  > Get in Touch with Us for the Best Quality Custom Prints & Supplies. </h6>
-            <p className='text-sm   font-semibold   ' > Qui dolore ipsum quia dolor sit amet, consec tetur adipisci velit, sed quia non numquam eius modi tempora incidunt lores ta porro ame. </p>
+          <h6 className=' mb-[15px]'  > Important Links</h6>
+          <p className='text-sm  list-none ' >
 
+            <li className=' hover:cursor-pointer   hover:text-red-500   text-[14px] font-thin  my-2 '   > Know More About Privacy Policy  </li>
+            <li className=' hover:cursor-pointer   hover:text-red-500   text-[14px] font-thin  my-2 ' > Visit Shipping Details  </li>
+            <li className=' hover:cursor-pointer   hover:text-red-500   text-[14px] font-thin  my-2 '  >   Terms & Conditions </li>
 
-          </div>
-
-
-          <div className=' text-2xl font-semibold  mt-[20px] font-sans   mb-[50px]    text-white '>
-
-
-            <h6 className=' mb-[15px]'  > Quick Links</h6>
-            <p className='text-sm  list-none ' >
-
-              <li className=' hover:cursor-pointer   hover:text-red-500  font-semibold    '  > Know More About Us  </li>
-              <li className=' hover:cursor-pointer   hover:text-red-500  font-semibold    '  > Visit US  </li>
-              <li className=' hover:cursor-pointer   hover:text-red-500  font-semibold    '  >  Lets Connect </li>
-
-            </p>
-
+          </p>
 
           </div>
+          
+        </div>
 
 
-          <div className=' text-2xl  mt-[20px] font-sans   mb-[50px]   font-medium text-white '>
+        
 
-            <h6 className=' mb-[15px]'  > Important Links</h6>
-            <p className='text-sm  list-none ' >
 
-              <li className=' hover:cursor-pointer   hover:text-red-500  font-semibold    '  > Know More About Privacy Policy  </li>
-              <li className=' hover:cursor-pointer   hover:text-red-500  font-semibold    '  > Visit Shipping Details  </li>
-              <li className=' hover:cursor-pointer   hover:text-red-500  font-semibold    '  >   Terms & Conditions </li>
-
-            </p>
-
-          </div>
+         
 
         </div>
 

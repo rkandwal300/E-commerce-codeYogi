@@ -7,7 +7,7 @@ import { UserContext } from '../../Api/UserContext';
 
 
 
-const AuthRoute = ({children }) => {
+const AuthRoute = ({children ,children2 }) => {
 
     
     const { user , setUser} = useContext(UserContext);
@@ -17,7 +17,7 @@ const AuthRoute = ({children }) => {
         return <Navigate to = '/' /> ;
     }
     else{
-        return children  ;
+        return children   ;
     }
 
 

@@ -1,79 +1,50 @@
-import React, { useEffect, useState } from 'react'
-import { getSingleProduct } from '../api.js';
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import CartButton from './CartButton.jsx';
 import CartItem from './CartItem.jsx';
+import { cartListContext } from '../../Api/CartContext.jsx';
+import CartItem2 from './CartItem2.jsx';
+import Alert from '../SignUp/alert.jsx';
 
 
-const CartP = ({data}) => {
+
+
+const CartP = () => {
+
+  const {data ,setData , handleDeleteCartItem , HandleQuantity  } = useContext(cartListContext) ;
+
   
+  const cart = data;
+  const amt = '50'
 
 
-  const [ cart , setCart ] = useState({});
-
-  
-  const [cartData, setCartData] = useState([]);
-
-  const [ lgArrayDelete , setLgArrayDelete ] = useState();
-
-
-    let keyCart = Object.keys(data);
-
-    const cartValue = Object.values(data);
-
-
-
-  useEffect(
-            () => {
-    
-            let PromiseCart = keyCart.map((item , index) =>{ 
-                item= +item;
-                return getSingleProduct(item);
-            })
-
-        let newCart = Promise.all(PromiseCart);
-        newCart.then((response)=>{
-    
-          let valArr =[];
-            response.map((val)=>{
-            valArr.push(val.data);
-            setCartData([...valArr ])
-          })
-    
-    
-        }).catch(( err)=>{
-            console.log('Api  error bc',err)
-        })
-    }
-    , [])
 
 
 
 
 const deleteItem= (id )=>{
-console.log (' id = ',id );
 
-  let tempData = [ ...cartData ] ;
+  handleDeleteCartItem(id);
+}
 
-  tempData.splice(id,1);
-  console.log ( ' temp data = ' , tempData)
-  setCartData( tempData);
+const handleAmount = ()=>{
+  const prop =  cart;
+    const quantity = prop.map((val)=>{
+    return (  val.quantity  * val.product.price )
+  })
+
+
+  const totalAmt = quantity.reduce((a, b) => a + b, 0) 
+
+  return totalAmt;
 
 
 }
 
-
-const HandleQuantity = ( id , quantity )=>{
-  let cartObj = {...cart , [id]: quantity };
-  setCart(cartObj);
-
-  
-  console.log( 'cart page = ',cartObj);
-}
+  const subtotal = handleAmount() ;
 
 
 
-console.log( 'cart page out side = ',cart);
 
 
 
@@ -84,25 +55,26 @@ console.log( 'cart page out side = ',cart);
     <div  className=' min-h-[100vh] w-full flex justify-center items-center bg-slate-300    '>
 
 
-  <div className='min-h-[95vh] my-[30px]  py-[50px] w-[95%] bg-white rounded-lg shadow-sm shadow-black flex flex-col p-[30px]   ' >
+  <div className='h-fit py-5 my-[30px]   w-[95%] bg-white rounded-lg shadow-sm shadow-black flex flex-col p-[30px]   ' >
 
 
-<div  className='hidden  md:block'  >  
+<div  className='hidden  sm:block h-fit w-full shadow-xl shadow-slate-300 '  >  
+<Alert />
 
 
       {/* cart Header  */}
-      <div className=' flex  justify-start  text-lg font-semibold text-slate-700  w-full h-[50px]  border-2 border-slate-300 rounded-t-sm '> 
+      <div className=' flex  justify-start  text-lg font-semibold text-slate-700  w-full h-[30px]  border-2 border-slate-300 rounded-t-md bg-slate-100  '> 
 
 <div  
-className='w-[49%] h-[50px] flex justify-center items-center   border-r-2 border-slate-300     '
+className='w-[49%] h-[30px] flex justify-center items-center    border-slate-300     '
 > Product </div>  {/* 48% */}
 
 
 <div className=' w-[51%]  flex ' > 
 
-    <div   className='  h-full   w-[35%] border-r-2  border-slate-300   flex justify-center items-center    '
+    <div   className='  h-full   w-[35%] flex justify-center items-center    '
     > Price </div>
-    <div  className='  h-full   w-[35%] border-r-2 border-slate-300   flex justify-center items-center    '
+    <div  className='  h-full   w-[35%]  flex justify-center items-center    '
     > Quality </div>
     <div  className='  h-full   w-[35%]  flex justify-center items-center    '
     > Subtotal </div>
@@ -112,23 +84,24 @@ className='w-[49%] h-[50px] flex justify-center items-center   border-r-2 border
 </div>
 
 {
-  cartData && cartData.length > 0 ?(
+  cart && cart.length > 0 ?(
 
 
-  cartData.map((val , index)=>{
+
+  cart.map((val , index)=>{
 
 return(  
-  <div key = {val.id}>
+  <div key = {val.product.id}>
 
 
   <CartItem 
 
   setDel = { deleteItem}
-  pro ={ index}  
-  title ={val.title}
-  price =  {val.price} 
-  photo = {val.thumbnail }
-
+  pro ={ val.product.id}  
+  title ={val.product.title}
+  price =  {val.product.price} 
+  photo = {val.product.thumbnail }
+  quantity = {val.quantity}
   setQuantiy = {HandleQuantity}
   />
   </div>
@@ -143,90 +116,85 @@ return(
 
 
 
-  <CartButton updateData ={cart}  oldvalue = {cartData}   /> 
+  <CartButton className=' rounded-b-md'   /> 
 
 </div>
 
 
-<div  className='  md:hidden'  >  
+    <div  className='  sm:hidden  rounded-md shadow-lg shadow-slate-300      '  >  
 
 
 
 
-{
+    {
 
-  cartData && cartData.length > 0 ?(
-  cartData.map((val)=>{
+      cart && cart.length > 0 ?(
+      cart.map((val)=>{
 
-return(  
-  <div  key = {val.id} >
+    return(  
 
-  
-    <div  className='mb-[20px]  '>
+      <div   key = {val.product.id} >
 
-
-      <div className='border-2 border-slate-400 h-[40px] text-3xl flex justify-end  items-center pr-[40px] text-slate-600  hover:text-red-400 cursor-pointer    ' >  <AiOutlineCloseCircle /></div>
-
-      <div   className='border-x-2 border-slate-400  h-[90px]  flex justify-center  items-center      '>
-
-            <div className=' h-[80px] hover:bg-red-400  bg-contain  cursor-pointer'>
-              <img className='object-cover  h-[80px]  hover:border-2 border-red-400   ' src={val.thumbnail } alt={val.title}   />
-            </div>
-      </div>
-    
-      <div  className='border-x-2  border-t-2 border-slate-400  h-[40px] text-xl font-semibold flex justify-between  items-center px-[20px] text-slate-500 cursor-pointer   '>
-
-        <span> Product :</span>
-
-        <span className='text-red-400'>  {val.title}  </span>
-
-      </div>
-
-      <div  className='border-x-2 border-t-2 border-slate-400  h-[40px] text-xl font-semibold flex justify-between  items-center px-[20px] text-slate-500 cursor-pointer   '>
-
-        <span> Price :</span>
-
-        <span >  $ {val.price} </span>
-
-      </div>
-
-
-
-      <div  className='border-x-2  border-t-2 border-slate-400  h-[40px] text-xl font-semibold flex justify-between  items-center px-[20px] text-slate-500 cursor-pointer   '>
-
-        <span> Quantity :</span>
-
+      <CartItem2 
+        
+      setDel = { deleteItem}
+      pro ={ val.product.id}  
+      title ={val.product.title}
+      price =  {val.product.price} 
+      photo = {val.product.thumbnail }
+      quantity = {val.quantity}
+      setQuantiy = {HandleQuantity}
+      />
       
-        <input className='  border-2 border-slate-300  w-[60px] text-xl  rounded-md  text-center font-semibold text-slate-500 ' type='number' value='1' />
-
       </div>
 
 
-      <div  className='border-2  border-slate-400  h-[40px] text-xl font-semibold flex justify-between  items-center px-[20px] text-slate-500 cursor-pointer   '>
+      )})
 
-<span> Subtotal :</span>
+      ):(
+        <div className=' h-[60px]  flex justify-center items-center border-2 border-slate-400   text-2xl text-slate-500  '  >   Cart  is empty</div> 
+      )
+    }
 
-<span > $ {val.price}</span>
-
-</div>
-
-
-
-  </div>
-  </div>
+    <CartButton />
 
 
-  )})
-
-  ):(
-    <div className=' h-[60px]  flex justify-center items-center border-2 border-slate-400   text-2xl text-slate-500  '  >   Cart  is empty</div> 
-  )
-}
-
-<CartButton />
+    </div>
 
 
-</div>
+      {/* // Subtotal */}
+      <div className= '  h-fit mt-5 flex justify-end  '>
+
+        <div className='h-full md:w-[350px] w-full       flex-col rounded-md shadow-lg shadow-slate-300  border-2 border-slate-300    '  >
+
+        <div className='h-[45px] w-full bg-slate-100 pl-5 flex  justify-start items-center text-lg font-semibold text-slate-500 border-b-2 border-slate-400 '>
+        Cart totals
+        </div>
+
+        <div className='px-4 mt-7 flex flex-col justify-center '>
+            <div className='h-fit w-[100%] flex py-2 border-b-2 border-slate-400       '>
+            <span className='text-md font-semibold text-slate-700   w-[50%] ml-4  '> Subtotal</span>
+
+            <span className='text-md font-semibold text-slate-700   w-[50%] ml-4  '> {subtotal }  </span>
+
+            </div>
+
+            <div className='h-fit w-[100%] flex py-2 border-b-2 border-slate-400       '>
+            <span className='text-md font-semibold text-slate-700   w-[50%] ml-4  '> Total</span>
+
+            <span className='text-md font-semibold text-slate-700   w-[50%] ml-4  '> {subtotal } </span>
+
+            </div>
+
+            <button className='my-3 py-4 w-full text-lg font-semibold text-white  rounded-lg shadow-lg shadow-slate-300  bg-red-400  hover:shadow-slate-400 '> Proceed to Checkout  </button>
+
+        </div>
+
+        
+
+        </div>
+
+      </div>
 
   </div>
 
@@ -235,9 +203,7 @@ return(
 
     </div>
       
-      // ):(
-      //    <div className=' h-[100vh ] w-full flex justify-center items-center text-2xl' >Cart is epmty  </div>)
-        
+    
     
   )
 }

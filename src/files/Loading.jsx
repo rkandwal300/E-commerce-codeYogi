@@ -1,9 +1,6 @@
 import React, { memo, useContext, useEffect, useMemo, useState } from 'react'
 import { AiFillCalculator ,AiOutlinePhone } from 'react-icons/ai';
 import { ImCancelCircle ,ImAddressBook ,ImMail4   } from "react-icons/im";
-import NoteContext from '../Api/noteContext';
-import ReactTable from "react-table";  
-import { getSingleProduct } from './api';
 
 const Loading = () => {
   return (

@@ -6,6 +6,7 @@ const PdDetailImg = ({props}) => {
 
 if( props){
     const pic =props;
+    console.log('pic',pic)
 
 
   

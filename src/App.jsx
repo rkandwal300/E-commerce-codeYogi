@@ -1,120 +1,72 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import Header from './files/Header';
-import Footer from './files/footer';
-import ProductListPage from './files/PdList/ProductListPage';
-import ProductDetail from './files/PdDetail/ProductDetail';
-import Error from './files/Error';
-import NoteState from './Api/noteState';
-import { Routes, Route, Link, useParams } from "react-router-dom";
-import Loading, { AboutUs , Contact  } from './files/Loading';
-import LogIn from './files/SignUp/LogIn';
-import LogIn2 from './files/SignUp/LogIn2';
-import EasyLogIn from './files/SignUp/LogIn';
-import CartP from './files/Cart/CartP';
-import LogIn3 from './files/SignUp/LogIn 3';
-import axios from 'axios';
-import SignUp from './files/SignUp/Sign_Up';
-import AuthRoute from './files/SignUp/AuthRoute';
-import UserRoute from './files/SignUp/UserRoute';
-import Alert from './files/SignUp/alert';
-import UserState, { UserContext } from './Api/UserContext';
-import Authentication from './files/SignUp/Authentication';
-
-
+import React, { createContext, useContext, useEffect, useState } from "react";
+import Header from "./files/Header";
+import Footer from "./files/footer";
+import ProductListPage from "./files/PdList/ProductListPage";
+import ProductDetail from "./files/PdDetail/ProductDetail";
+import Error from "./files/Error";
+import { Routes, Route } from "react-router-dom";
+import Loading, { Contact } from "./files/Loading";
+import LogIn2 from "./files/SignUp/LogIn2";
+import CartP from "./files/Cart/CartP";
+import SignUp from "./files/SignUp/Sign_Up";
+import AuthRoute from "./files/SignUp/AuthRoute";
+import UserRoute from "./files/SignUp/UserRoute";
+import Alert from "./files/SignUp/alert";
+import UserState, { UserContext } from "./Api/UserContext";
+import Authentication from "./files/SignUp/Authentication";
+import CartState from './Api/CartContext';
+import AlertState from "./Api/AlertContext";
+import ProductState from "./Api/Sort-Search";
 
 function App() {
+ 
 
- const  {loadingUser } = useContext(UserContext);
-
-  const storageCartString = localStorage.getItem('cart-items');
-  const storageCart       = JSON.parse(storageCartString) || {};
-
-
+  return (
+    <div>
   
-
-  const [ cart , setCart ] = useState(storageCart);
-
-
-
-    const handleAddToCart =( proId,count)=>{
-      let oldcount = cart[proId] || 0;
-
-      let cartObj = {...cart , [proId]:oldcount + count };
+      <AlertState>
+      <UserState>
+      <ProductState >
+      <CartState>
+        {/* <EasyLogIn /> */}
+        {/* <LogIn />     // with formik ki help se doobara bnao  */}
+        <Header />
 
 
-      const jsonCart = JSON.stringify(cartObj)
-      localStorage.setItem('cart-items' ,jsonCart)
+        {/* <Contact /> */}
 
+        <Routes>
+          <Route
+            path="/products/:id"
+            element={<ProductDetail  />}
+          />
+          <Route path="/Contact_Us" element={<Contact />} />
+          <Route path="/products/Cart" element={<CartP />} />
 
-      setCart(cartObj);
-      console.log('cart =  ',cart );
+          <Route path="/signup" element={<SignUp />} />
+          <Route
+            path="/LogIn"
+            element={
+              <AuthRoute children={<Authentication children={<LogIn2 />} />} children2 ={ <SignUp />} />
+            }
+          />
 
+          {/* <Route index element={<UserRoute children={<ProductListPage />} />} /> */}
 
-    }
+          <Route index element={<ProductListPage />} />
 
-    const cardCount =  Object.keys(cart).length;
+          <Route path="/:abc" element={<Error />} />
+          <Route path="*" element={<Error />} />
+        </Routes>
 
-    if(loadingUser){
-      <Loading />
-    }
-
-    return (
-<div>
-
-{/* <Alert type = 'error' message = ' username or password wrong ' /> */}
-<Alert type = 'success' message = ' Profile saved successfully  ' />
-
-<NoteState >
-{/* <EasyLogIn /> */}
-{/* <LogIn />     // with formik ki help se doobara bnao  */}
-<Header    arr={cardCount} />
-
-
-{/* <SignUp /> */}
-
-
-{/* <Contact /> */}
-
-
-<Routes>
-
-<Route path="/products/:id" element={<ProductDetail onAddToCart ={ handleAddToCart}  />} />
-<Route path="/Contact_Us" element={<Contact />} />
-<Route path="/products/Cart" element={  <CartP data={cart} />} />
-
-<Route path="/signup" element={  <SignUp />} />
-<Route path= "/LogIn" element={  <AuthRoute  children ={ <Authentication children = {<LogIn2 />} />   } />   } />
-
-
-
-
-<Route index element={<UserRoute children= { <ProductListPage /> }   />} />
-
-
-
-
-<Route path='/:abc' element={<Error />} />
-<Route path ='*'  element={<Error />} />
-
-</Routes>
-
-
-
-
-<Footer />
-
-</NoteState>
-
+        <Footer />
+      </CartState>
+      </ProductState>
+      </UserState>
+        </AlertState>
 
     </div>
-
-    )
+  );
 }
 
-export default App ;
-
-
-
-
-
-
+export default App;
